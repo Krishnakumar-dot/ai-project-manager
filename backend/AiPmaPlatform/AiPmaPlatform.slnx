@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AiPmaPlatform.Api/AiPmaPlatform.Api.csproj" />
+    <Project Path="src/AiPmaPlatform.Application/AiPmaPlatform.Application.csproj" />
+    <Project Path="src/AiPmaPlatform.Domain/AiPmaPlatform.Domain.csproj" />
+    <Project Path="src/AiPmaPlatform.Infrastructure/AiPmaPlatform.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AiPmaPlatform.Application.Tests/AiPmaPlatform.Application.Tests.csproj" />
+  </Folder>
+</Solution>
