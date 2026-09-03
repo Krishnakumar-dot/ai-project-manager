@@ -1,4 +1,5 @@
 ﻿using AiPmaPlatform.Application.Common.Interfaces;
+using AiPmaPlatform.Domain.Entities.Identity;
 using AiPmaPlatform.Domain.Entities.Organization;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace AiPmaPlatform.Infrastructure.Persistence
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<Department> Departments => Set<Department>();
         public DbSet<Employee> Employees => Set<Employee>();
+        public DbSet<User> Users => Set<User>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
