@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="Common\Identity\Commands\Register\" />
     <Folder Include="Common\AiCopilot\" />
-    <Folder Include="Common\Portfolio\" />
     <Folder Include="Organization\Queries\GetEmployeeById\" />
   </ItemGroup>
 
