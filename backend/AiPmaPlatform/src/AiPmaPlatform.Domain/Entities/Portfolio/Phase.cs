@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AiPmaPlatform.Domain.Common;
 
 namespace AiPmaPlatform.Domain.Entities.Portfolio
 {
-    internal class Phase
+    public class Phase : BaseEntity
     {
+        public string Name { get; set; } = string.Empty;
+        public int SequenceOrder { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public Guid ProjectId { get; set; }
+        public Project? Project { get; set; }
+
+        public ICollection<Milestone> Milestones { get; set; } = new List<Milestone>();
     }
 }

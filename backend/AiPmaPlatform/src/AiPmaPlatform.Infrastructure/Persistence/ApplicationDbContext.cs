@@ -1,5 +1,7 @@
 ﻿using AiPmaPlatform.Application.Common.Interfaces;
+using AiPmaPlatform.Domain.Entities.Identity;
 using AiPmaPlatform.Domain.Entities.Organization;
+using AiPmaPlatform.Domain.Entities.Portfolio;
 using Microsoft.EntityFrameworkCore;
 
 namespace AiPmaPlatform.Infrastructure.Persistence
@@ -12,6 +14,11 @@ namespace AiPmaPlatform.Infrastructure.Persistence
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<Department> Departments => Set<Department>();
         public DbSet<Employee> Employees => Set<Employee>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Portfolio> Portfolios => Set<Portfolio>();
+        public DbSet<Project> Projects => Set<Project>();
+        public DbSet<Phase> Phases => Set<Phase>();
+        public DbSet<Milestone> Milestones => Set<Milestone>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

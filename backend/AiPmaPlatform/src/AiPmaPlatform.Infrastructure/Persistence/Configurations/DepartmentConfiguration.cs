@@ -1,23 +1,18 @@
-﻿using AiPmaPlatform.Application.Common.Interfaces;
-using AiPmaPlatform.Infrastructure.Persistence;
+﻿using AiPmaPlatform.Domain.Entities.Organization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AiPmaPlatform.Infrastructure
+namespace AiPmaPlatform.Infrastructure.Persistence.Configurations
 {
-    public static class DependencyInjection
+    public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {
-        public static IServiceCollection AddInfrastructure(
-            this IServiceCollection services, IConfiguration configuration)
+        public void Configure(EntityTypeBuilder<Department> builder)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            builder.Property(d => d.Name).IsRequired().HasMaxLength(200);
 
-            services.AddScoped<IApplicationDbContext>(
-                provider => provider.GetRequiredService<ApplicationDbContext>());
-
-            return services;
+            builder.HasOne(d => d.Company)
+                   .WithMany(c => c.Departments)
+                   .HasForeignKey(d => d.CompanyId);
         }
     }
 }

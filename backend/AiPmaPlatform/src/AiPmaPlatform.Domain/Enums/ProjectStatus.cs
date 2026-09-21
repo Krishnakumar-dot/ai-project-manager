@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AiPmaPlatform.Domain.Enums
+﻿namespace AiPmaPlatform.Domain.Enums
 {
-    internal class ProjectStatus
+    public enum ProjectStatus
     {
+        NotStarted = 0,
+        InProgress = 1,
+        OnHold = 2,
+        Completed = 3,
+        Cancelled = 4
     }
 }

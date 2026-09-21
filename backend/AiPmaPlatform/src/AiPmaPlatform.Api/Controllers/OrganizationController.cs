@@ -1,11 +1,13 @@
 ﻿using AiPmaPlatform.Application.Organization.Commands.CreateDepartment;
 using AiPmaPlatform.Application.Organization.Queries.GetEmployeeList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AiPmaPlatform.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class OrganizationController : ControllerBase
     {
