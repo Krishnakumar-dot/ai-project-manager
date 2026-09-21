@@ -83,6 +83,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
+app.UseMiddleware<AiPmaPlatform.Api.Middleware.ExceptionHandlingMiddleware>();
 
 // HTTP request pipeline
 if (app.Environment.IsDevelopment())

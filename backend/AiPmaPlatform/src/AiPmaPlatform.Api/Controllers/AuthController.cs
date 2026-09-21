@@ -1,4 +1,5 @@
-﻿using AiPmaPlatform.Application.Identity.Commands.Login;
+﻿using AiPmaPlatform.Application.Common.Models;
+using AiPmaPlatform.Application.Identity.Commands.Login;
 using AiPmaPlatform.Application.Identity.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace AiPmaPlatform.Api.Controllers
             => Ok(await _mediator.Send(command));
 
         [HttpPost("login")]
-        public async Task<ActionResult<LoginResult>> Login(LoginCommand command)
-            => Ok(await _mediator.Send(command));
+        public async Task<ActionResult<ApiResponse<LoginResult>>> Login(LoginCommand command)
+    => Ok(await _mediator.Send(command));
     }
 }
