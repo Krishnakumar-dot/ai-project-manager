@@ -14,11 +14,11 @@ namespace AiPmaPlatform.Api.Controllers
         public AuthController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost("register")]
-        public async Task<ActionResult<Guid>> Register(RegisterCommand command)
-            => Ok(await _mediator.Send(command));
+        public async Task<ActionResult<ApiResponse<Guid>>> Register(RegisterCommand command)
+    => Ok(await _mediator.Send(command));
 
         [HttpPost("login")]
         public async Task<ActionResult<ApiResponse<LoginResult>>> Login(LoginCommand command)
-    => Ok(await _mediator.Send(command));
+            => Ok(await _mediator.Send(command));
     }
 }

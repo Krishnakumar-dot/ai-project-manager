@@ -1,11 +1,12 @@
 ﻿using AiPmaPlatform.Application.Common.Interfaces;
+using AiPmaPlatform.Application.Common.Models;
 using AiPmaPlatform.Domain.Entities.Portfolio;
 using AiPmaPlatform.Domain.Enums;
 using MediatR;
 
 namespace AiPmaPlatform.Application.Portfolio.Commands.CreateProject
 {
-    public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, Guid>
+    public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, ApiResponse<Guid>>
     {
         private readonly IApplicationDbContext _context;
         private readonly ICurrentUserService _currentUserService;
@@ -16,7 +17,7 @@ namespace AiPmaPlatform.Application.Portfolio.Commands.CreateProject
             _currentUserService = currentUserService;
         }
 
-        public async Task<Guid> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Guid>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
             var project = new Project
             {
@@ -31,7 +32,8 @@ namespace AiPmaPlatform.Application.Portfolio.Commands.CreateProject
 
             _context.Projects.Add(project);
             await _context.SaveChangesAsync(cancellationToken);
-            return project.Id;
+
+            return ApiResponse<Guid>.Success(project.Id, "Project created successfully.");
         }
     }
 }

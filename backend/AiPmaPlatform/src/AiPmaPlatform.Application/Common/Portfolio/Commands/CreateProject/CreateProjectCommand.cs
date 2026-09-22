@@ -1,9 +1,9 @@
-﻿using AiPmaPlatform.Domain.Enums;
+﻿using AiPmaPlatform.Application.Common.Models;
 using MediatR;
 
 namespace AiPmaPlatform.Application.Portfolio.Commands.CreateProject
 {
-    public class CreateProjectCommand : IRequest<Guid>
+    public class CreateProjectCommand : IRequest<ApiResponse<Guid>>
     {
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }

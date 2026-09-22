@@ -1,18 +1,24 @@
 ﻿using AiPmaPlatform.Application.Common.Interfaces;
+using AiPmaPlatform.Application.Common.Models;
 using AiPmaPlatform.Domain.Entities.Identity;
 using MediatR;
-using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace AiPmaPlatform.Application.Identity.Commands.Register
 {
-    public class RegisterHandler : IRequestHandler<RegisterCommand, Guid>
+    public class RegisterHandler : IRequestHandler<RegisterCommand, ApiResponse<Guid>>
     {
         private readonly IApplicationDbContext _context;
-
         public RegisterHandler(IApplicationDbContext context) => _context = context;
 
-        public async Task<Guid> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Guid>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            var exists = await _context.Users
+                .AnyAsync(u => u.Email.ToLower() == request.Email.ToLower(), cancellationToken);
+
+            if (exists)
+                return ApiResponse<Guid>.Fail("An account with this email already exists.");
+
             var user = new User
             {
                 Name = request.Name,
@@ -23,7 +29,8 @@ namespace AiPmaPlatform.Application.Identity.Commands.Register
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync(cancellationToken);
-            return user.Id;
+
+            return ApiResponse<Guid>.Success(user.Id, "Account created successfully.");
         }
     }
 }

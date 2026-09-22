@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AiPmaPlatform.Application.Common.Models;
+using MediatR;
 
 namespace AiPmaPlatform.Application.Portfolio.Queries.GetProjectById
 {
@@ -6,7 +7,7 @@ namespace AiPmaPlatform.Application.Portfolio.Queries.GetProjectById
     public record ProjectDetailDto(Guid Id, string Name, string? Description, string Status,
         DateTime StartDate, DateTime? EndDate, List<PhaseDto> Phases);
 
-    public class GetProjectByIdQuery : IRequest<ProjectDetailDto?>
+    public class GetProjectByIdQuery : IRequest<ApiResponse<ProjectDetailDto>>
     {
         public Guid Id { get; set; }
     }

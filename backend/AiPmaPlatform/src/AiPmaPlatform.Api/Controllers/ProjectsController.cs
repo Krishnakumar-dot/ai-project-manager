@@ -1,4 +1,5 @@
-﻿using AiPmaPlatform.Application.Portfolio.Commands.CreateProject;
+﻿using AiPmaPlatform.Application.Common.Models;
+using AiPmaPlatform.Application.Portfolio.Commands.CreateProject;
 using AiPmaPlatform.Application.Portfolio.Queries.GetProjectById;
 using AiPmaPlatform.Application.Portfolio.Queries.GetProjectsList;
 using MediatR;
@@ -16,18 +17,15 @@ namespace AiPmaPlatform.Api.Controllers
         public ProjectsController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> Create(CreateProjectCommand command)
-            => Ok(await _mediator.Send(command));
+        public async Task<ActionResult<ApiResponse<Guid>>> Create(CreateProjectCommand command)
+    => Ok(await _mediator.Send(command));
 
         [HttpGet]
-        public async Task<ActionResult<List<ProjectListDto>>> GetAll()
+        public async Task<ActionResult<ApiResponse<List<ProjectListDto>>>> GetAll()
             => Ok(await _mediator.Send(new GetProjectsListQuery()));
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProjectDetailDto>> GetById(Guid id)
-        {
-            var result = await _mediator.Send(new GetProjectByIdQuery { Id = id });
-            return result is null ? NotFound() : Ok(result);
-        }
+        public async Task<ActionResult<ApiResponse<ProjectDetailDto>>> GetById(Guid id)
+            => Ok(await _mediator.Send(new GetProjectByIdQuery { Id = id }));
     }
 }

@@ -1,15 +1,16 @@
 ﻿using AiPmaPlatform.Application.Common.Interfaces;
+using AiPmaPlatform.Application.Common.Models;
 using AiPmaPlatform.Domain.Entities.Portfolio;
 using MediatR;
 
 namespace AiPmaPlatform.Application.Portfolio.Commands.CreatePhase
 {
-    public class CreatePhaseHandler : IRequestHandler<CreatePhaseCommand, Guid>
+    public class CreatePhaseHandler : IRequestHandler<CreatePhaseCommand, ApiResponse<Guid>>
     {
         private readonly IApplicationDbContext _context;
         public CreatePhaseHandler(IApplicationDbContext context) => _context = context;
 
-        public async Task<Guid> Handle(CreatePhaseCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Guid>> Handle(CreatePhaseCommand request, CancellationToken cancellationToken)
         {
             var phase = new Phase
             {
@@ -22,7 +23,8 @@ namespace AiPmaPlatform.Application.Portfolio.Commands.CreatePhase
 
             _context.Phases.Add(phase);
             await _context.SaveChangesAsync(cancellationToken);
-            return phase.Id;
+
+            return ApiResponse<Guid>.Success(phase.Id, "Phase created successfully.");
         }
     }
 }

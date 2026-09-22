@@ -1,16 +1,16 @@
 ﻿using AiPmaPlatform.Application.Common.Interfaces;
+using AiPmaPlatform.Application.Common.Models;
 using AiPmaPlatform.Domain.Entities.Organization;
 using MediatR;
 
 namespace AiPmaPlatform.Application.Organization.Commands.CreateDepartment
 {
-    public class CreateDepartmentHandler : IRequestHandler<CreateDepartmentCommand, Guid>
+    public class CreateDepartmentHandler : IRequestHandler<CreateDepartmentCommand, ApiResponse<Guid>>
     {
         private readonly IApplicationDbContext _context;
-
         public CreateDepartmentHandler(IApplicationDbContext context) => _context = context;
 
-        public async Task<Guid> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Guid>> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
         {
             var department = new Department
             {
@@ -21,7 +21,7 @@ namespace AiPmaPlatform.Application.Organization.Commands.CreateDepartment
             _context.Departments.Add(department);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return department.Id;
+            return ApiResponse<Guid>.Success(department.Id, "Department created successfully.");
         }
     }
 }
