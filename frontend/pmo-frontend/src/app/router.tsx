@@ -4,11 +4,8 @@ import { Spinner } from "@fluentui/react-components";
 import { AppShell } from "../layouts/AppShell";
 import { LoginPage } from "../features/auth/LoginPage";
 
-// Lazy-loaded: each becomes its own JS chunk, fetched on demand
 const DashboardPage = lazy(() => import("../features/dashboard/DashboardPage"));
-// As you build these, add them the same way:
-// const ProjectsPage = lazy(() => import("../features/projects/ProjectsPage"));
-// const TasksPage = lazy(() => import("../features/tasks/TasksPage"));
+const ProjectsPage = lazy(() => import("../features/projects/ProjectsPage"));
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem("token");
@@ -23,7 +20,8 @@ function PageFallback() {
   );
 }
 
-const withSuspense = (Component: React.LazyExoticComponent<() => React.ReactElement>) => (  <Suspense fallback={<PageFallback />}>
+const withSuspense = (Component: React.LazyExoticComponent<() => React.ReactElement>) => (
+  <Suspense fallback={<PageFallback />}>
     <Component />
   </Suspense>
 );
@@ -35,8 +33,7 @@ export const router = createBrowserRouter([
     element: <RequireAuth><AppShell /></RequireAuth>,
     children: [
       { index: true, element: withSuspense(DashboardPage) },
-      // { path: "projects", element: withSuspense(ProjectsPage) },
-      // { path: "tasks", element: withSuspense(TasksPage) },
+      { path: "projects", element: withSuspense(ProjectsPage) },
     ],
   },
 ]);
