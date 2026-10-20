@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const api = axios.create({
   baseURL: "https://localhost:7177/api",
+  // Treat 400 as a normal response so the { isSuccessful, message } envelope can be read.
+  validateStatus: (status) => (status >= 200 && status < 300) || status === 400,
 });
 
 api.interceptors.request.use((config) => {
