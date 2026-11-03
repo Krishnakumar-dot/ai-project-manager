@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentValidation;
 
-namespace AiPmaPlatform.Application.Organization.Commands.UpdateTaskStatus
+namespace AiPmaPlatform.Application.ProjectTasks.Commands.UpdateTaskStatus
 {
-    internal class UpdateTaskStatusValidator
+    public class UpdateTaskStatusValidator : AbstractValidator<UpdateTaskStatusCommand>
     {
+        public UpdateTaskStatusValidator()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Status).IsInEnum();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using AiPmaPlatform.Domain.Entities.Identity;
 using AiPmaPlatform.Domain.Entities.Organization;
 using AiPmaPlatform.Domain.Entities.Portfolio;
+using AiPmaPlatform.Domain.Entities.ProjectTasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace AiPmaPlatform.Infrastructure.Persistence
@@ -19,6 +20,7 @@ namespace AiPmaPlatform.Infrastructure.Persistence
         public DbSet<Project> Projects => Set<Project>();
         public DbSet<Phase> Phases => Set<Phase>();
         public DbSet<Milestone> Milestones => Set<Milestone>();
+        public DbSet<ProjectTask> ProjectTasks => Set<ProjectTask>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

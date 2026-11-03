@@ -6,6 +6,7 @@ import { LoginPage } from "../features/auth/LoginPage";
 
 const DashboardPage = lazy(() => import("../features/dashboard/DashboardPage"));
 const ProjectsPage = lazy(() => import("../features/projects/ProjectsPage"));
+const TasksPage = lazy(() => import("../features/tasks/TasksPage"));
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem("token");
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: withSuspense(DashboardPage) },
       { path: "projects", element: withSuspense(ProjectsPage) },
+      { path: "tasks", element: withSuspense(TasksPage) },
     ],
   },
 ]);

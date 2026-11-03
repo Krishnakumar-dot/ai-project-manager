@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AiPmaPlatform.Domain.Enums
+﻿namespace AiPmaPlatform.Domain.Enums
 {
-    internal class ProjectTaskStatus
+    public enum ProjectTaskStatus
     {
+        ToDo = 0,
+        InProgress = 1,
+        InReview = 2,
+        Done = 3
     }
 }

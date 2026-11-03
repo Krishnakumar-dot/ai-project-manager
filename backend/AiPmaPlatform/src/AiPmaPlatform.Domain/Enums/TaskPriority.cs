@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AiPmaPlatform.Domain.Enums
+﻿namespace AiPmaPlatform.Domain.Enums
 {
-    internal class TaskPriority
+    public enum TaskPriority
     {
+        Low = 0,
+        Medium = 1,
+        High = 2,
+        Critical = 3
     }
 }

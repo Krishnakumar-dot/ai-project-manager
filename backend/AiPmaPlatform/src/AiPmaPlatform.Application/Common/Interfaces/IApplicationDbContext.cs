@@ -1,6 +1,7 @@
 ﻿using AiPmaPlatform.Domain.Entities.Identity;
 using AiPmaPlatform.Domain.Entities.Organization;
 using AiPmaPlatform.Domain.Entities.Portfolio;
+using AiPmaPlatform.Domain.Entities.ProjectTasks;
 using Microsoft.EntityFrameworkCore;
 using PortfolioEntity = AiPmaPlatform.Domain.Entities.Portfolio.Portfolio;
 namespace AiPmaPlatform.Application.Common.Interfaces
@@ -15,6 +16,7 @@ namespace AiPmaPlatform.Application.Common.Interfaces
         DbSet<Project> Projects { get; }
         DbSet<Phase> Phases { get; }
         DbSet<Milestone> Milestones { get; }
+        DbSet<ProjectTask> ProjectTasks { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

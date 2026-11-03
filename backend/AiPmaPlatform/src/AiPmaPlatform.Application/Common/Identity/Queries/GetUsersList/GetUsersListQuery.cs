@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AiPmaPlatform.Application.Common.Models;
+using MediatR;
 
-namespace AiPmaPlatform.Application.Common.Identity.Queries.GetUsersList
+namespace AiPmaPlatform.Application.Identity.Queries.GetUsersList
 {
-    internal class GetUsersListQuery
-    {
-    }
+    public record UserListDto(Guid Id, string Name, string Email, string Role);
+
+    public class GetUsersListQuery : IRequest<ApiResponse<List<UserListDto>>> { }
 }

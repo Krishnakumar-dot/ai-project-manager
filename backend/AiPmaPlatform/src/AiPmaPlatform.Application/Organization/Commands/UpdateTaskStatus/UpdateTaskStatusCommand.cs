@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AiPmaPlatform.Application.Common.Models;
+using AiPmaPlatform.Domain.Enums;
+using MediatR;
 
-namespace AiPmaPlatform.Application.Organization.Commands.UpdateTaskStatus
+namespace AiPmaPlatform.Application.ProjectTasks.Commands.UpdateTaskStatus
 {
-    internal class UpdateTaskStatusCommand
+    public class UpdateTaskStatusCommand : IRequest<ApiResponse<Guid>>
     {
+        public Guid Id { get; set; }
+        public ProjectTaskStatus Status { get; set; }
     }
 }
