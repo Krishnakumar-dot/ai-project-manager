@@ -4,8 +4,9 @@ import { makeStyles, tokens, Avatar, Text, Button } from "@fluentui/react-compon
 import {
   Home24Regular, FolderOpen24Regular, TaskListSquareLtr24Regular,
   Clock24Regular, MoneyHand24Regular, Warning24Regular,
-  SignOut24Regular, Sparkle24Regular,
+  SignOut24Regular, Sparkle24Regular,CheckmarkCircle24Regular 
 } from "@fluentui/react-icons";
+import { isApprover } from "../features/auth/session";
 
 const useStyles = makeStyles({
   shell: { display: "flex", height: "100vh", backgroundColor: tokens.colorNeutralBackground2 },
@@ -35,6 +36,7 @@ const navItems = [
   { label: "Projects", icon: FolderOpen24Regular, path: "/projects" },
   { label: "Tasks", icon: TaskListSquareLtr24Regular, path: "/tasks" },
   { label: "Timesheets", icon: Clock24Regular, path: "/timesheets" },
+  { label: "Approvals", icon: CheckmarkCircle24Regular, path: "/approvals", approverOnly: true },
   { label: "Financials", icon: MoneyHand24Regular, path: "/financials" },
   { label: "Risks", icon: Warning24Regular, path: "/risks" },
   { label: "AI Co-Pilot", icon: Sparkle24Regular, path: "/copilot" },
@@ -49,6 +51,7 @@ export function AppShell() {
     localStorage.removeItem("token");
     navigate("/login");
   };
+const visibleNav = navItems.filter((item) => !item.approverOnly || isApprover());
 
   return (
     <div className={styles.shell}>
@@ -59,7 +62,7 @@ export function AppShell() {
           })}
           <Text weight="bold" size={500}>PMO Platform</Text>
         </div>
-        {navItems.map((item) => {
+        {visibleNav.map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
           return (

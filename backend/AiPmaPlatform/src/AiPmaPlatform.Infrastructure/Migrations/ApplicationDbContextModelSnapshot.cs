@@ -286,6 +286,92 @@ namespace AiPmaPlatform.Infrastructure.Migrations
                     b.ToTable("ProjectTasks");
                 });
 
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.Timesheet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReviewComment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ReviewedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("WeekStartDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewedById");
+
+                    b.HasIndex("UserId", "WeekStartDate")
+                        .IsUnique();
+
+                    b.ToTable("Timesheets");
+                });
+
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.TimesheetEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("Hours")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<bool>("IsBillable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProjectTaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TimesheetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("ProjectTaskId");
+
+                    b.HasIndex("TimesheetId");
+
+                    b.ToTable("TimesheetEntries");
+                });
+
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Organization.Department", b =>
                 {
                     b.HasOne("AiPmaPlatform.Domain.Entities.Organization.Company", "Company")
@@ -358,6 +444,50 @@ namespace AiPmaPlatform.Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.Timesheet", b =>
+                {
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Identity.User", "ReviewedBy")
+                        .WithMany()
+                        .HasForeignKey("ReviewedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ReviewedBy");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.TimesheetEntry", b =>
+                {
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Portfolio.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AiPmaPlatform.Domain.Entities.ProjectTasks.ProjectTask", "ProjectTask")
+                        .WithMany()
+                        .HasForeignKey("ProjectTaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Timesheets.Timesheet", "Timesheet")
+                        .WithMany("Entries")
+                        .HasForeignKey("TimesheetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("ProjectTask");
+
+                    b.Navigation("Timesheet");
+                });
+
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Organization.Company", b =>
                 {
                     b.Navigation("Departments");
@@ -381,6 +511,11 @@ namespace AiPmaPlatform.Infrastructure.Migrations
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Portfolio.Project", b =>
                 {
                     b.Navigation("Phases");
+                });
+
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.Timesheet", b =>
+                {
+                    b.Navigation("Entries");
                 });
 #pragma warning restore 612, 618
         }

@@ -31,6 +31,8 @@ export function LoginPage() {
                 setError(result.message);
             } else {
                 localStorage.setItem("token", result.response.token);
+                localStorage.setItem("role", result.response.role);
+                localStorage.setItem("name", result.response.name);
                 navigate("/");
             }
         } catch {

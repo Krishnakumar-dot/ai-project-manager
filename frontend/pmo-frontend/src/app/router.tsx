@@ -3,10 +3,13 @@ import { lazy, Suspense } from "react";
 import { Spinner } from "@fluentui/react-components";
 import { AppShell } from "../layouts/AppShell";
 import { LoginPage } from "../features/auth/LoginPage";
+import { isApprover } from "../features/auth/session";
 
 const DashboardPage = lazy(() => import("../features/dashboard/DashboardPage"));
 const ProjectsPage = lazy(() => import("../features/projects/ProjectsPage"));
 const TasksPage = lazy(() => import("../features/tasks/TasksPage"));
+const TimesheetPage = lazy(() => import("../features/timesheets/TimesheetPage"));
+const ApprovalsPage = lazy(() => import("../features/timesheets/ApprovalsPage"));
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem("token");
@@ -36,6 +39,8 @@ export const router = createBrowserRouter([
       { index: true, element: withSuspense(DashboardPage) },
       { path: "projects", element: withSuspense(ProjectsPage) },
       { path: "tasks", element: withSuspense(TasksPage) },
+      { path: "timesheets", element: withSuspense(TimesheetPage) },
+      { path: "approvals", element: isApprover() ? withSuspense(ApprovalsPage) : <Navigate to="/" replace /> },
     ],
   },
 ]);
