@@ -10,6 +10,7 @@ const ProjectsPage = lazy(() => import("../features/projects/ProjectsPage"));
 const TasksPage = lazy(() => import("../features/tasks/TasksPage"));
 const TimesheetPage = lazy(() => import("../features/timesheets/TimesheetPage"));
 const ApprovalsPage = lazy(() => import("../features/timesheets/ApprovalsPage"));
+const ResourcesPage = lazy(() => import("../features/resources/ResourcesPage"));
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem("token");
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
       { path: "tasks", element: withSuspense(TasksPage) },
       { path: "timesheets", element: withSuspense(TimesheetPage) },
       { path: "approvals", element: isApprover() ? withSuspense(ApprovalsPage) : <Navigate to="/" replace /> },
+      { path: "resources", element: isApprover() ? withSuspense(ResourcesPage) : <Navigate to="/" replace /> },
     ],
   },
 ]);

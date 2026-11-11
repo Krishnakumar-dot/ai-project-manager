@@ -2,6 +2,7 @@
 using AiPmaPlatform.Domain.Entities.Organization;
 using AiPmaPlatform.Domain.Entities.Portfolio;
 using AiPmaPlatform.Domain.Entities.ProjectTasks;
+using AiPmaPlatform.Domain.Entities.ResourcePlanning;
 using AiPmaPlatform.Domain.Entities.Timesheets;
 using Microsoft.EntityFrameworkCore;
 using PortfolioEntity = AiPmaPlatform.Domain.Entities.Portfolio.Portfolio;
@@ -20,6 +21,7 @@ namespace AiPmaPlatform.Application.Common.Interfaces
         DbSet<ProjectTask> ProjectTasks { get; }
         DbSet<Timesheet> Timesheets { get; }
         DbSet<TimesheetEntry> TimesheetEntries { get; }
+        DbSet<ResourceAllocation> ResourceAllocations { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

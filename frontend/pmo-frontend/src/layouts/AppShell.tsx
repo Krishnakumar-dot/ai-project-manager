@@ -4,7 +4,7 @@ import { makeStyles, tokens, Avatar, Text, Button } from "@fluentui/react-compon
 import {
   Home24Regular, FolderOpen24Regular, TaskListSquareLtr24Regular,
   Clock24Regular, MoneyHand24Regular, Warning24Regular,
-  SignOut24Regular, Sparkle24Regular,CheckmarkCircle24Regular 
+  SignOut24Regular, Sparkle24Regular,CheckmarkCircle24Regular ,People24Regular 
 } from "@fluentui/react-icons";
 import { isApprover } from "../features/auth/session";
 
@@ -40,6 +40,7 @@ const navItems = [
   { label: "Financials", icon: MoneyHand24Regular, path: "/financials" },
   { label: "Risks", icon: Warning24Regular, path: "/risks" },
   { label: "AI Co-Pilot", icon: Sparkle24Regular, path: "/copilot" },
+  { label: "Resources", icon: People24Regular, path: "/resources", approverOnly: true },
 ];
 
 export function AppShell() {

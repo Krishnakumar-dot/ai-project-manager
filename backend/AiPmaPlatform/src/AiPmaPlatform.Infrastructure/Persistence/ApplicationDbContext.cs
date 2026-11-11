@@ -3,6 +3,7 @@ using AiPmaPlatform.Domain.Entities.Identity;
 using AiPmaPlatform.Domain.Entities.Organization;
 using AiPmaPlatform.Domain.Entities.Portfolio;
 using AiPmaPlatform.Domain.Entities.ProjectTasks;
+using AiPmaPlatform.Domain.Entities.ResourcePlanning;
 using AiPmaPlatform.Domain.Entities.Timesheets;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,7 @@ namespace AiPmaPlatform.Infrastructure.Persistence
         public DbSet<ProjectTask> ProjectTasks => Set<ProjectTask>();
         public DbSet<Timesheet> Timesheets => Set<Timesheet>();
         public DbSet<TimesheetEntry> TimesheetEntries => Set<TimesheetEntry>();
+        public DbSet<ResourceAllocation> ResourceAllocations => Set<ResourceAllocation>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

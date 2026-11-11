@@ -286,6 +286,46 @@ namespace AiPmaPlatform.Infrastructure.Migrations
                     b.ToTable("ProjectTasks");
                 });
 
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.ResourcePlanning.ResourceAllocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AllocationPercent")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RoleOnProject")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ResourceAllocations", t =>
+                        {
+                            t.HasCheckConstraint("CK_ResourceAllocations_Percent", "[AllocationPercent] BETWEEN 1 AND 100");
+                        });
+                });
+
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.Timesheet", b =>
                 {
                     b.Property<Guid>("Id")
@@ -442,6 +482,25 @@ namespace AiPmaPlatform.Infrastructure.Migrations
                     b.Navigation("Assignee");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.ResourcePlanning.ResourceAllocation", b =>
+                {
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Portfolio.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Timesheets.Timesheet", b =>
