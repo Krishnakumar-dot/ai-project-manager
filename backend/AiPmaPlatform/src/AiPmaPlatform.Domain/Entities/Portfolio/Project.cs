@@ -17,5 +17,9 @@ namespace AiPmaPlatform.Domain.Entities.Portfolio
         public Guid? OwnerId { get; set; } // links to User (PM)
 
         public ICollection<Phase> Phases { get; set; } = new List<Phase>();
+
+        public decimal? Budget { get; set; }
+        public decimal? BillingRatePerHour { get; set; }
+
     }
 }

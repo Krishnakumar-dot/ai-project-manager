@@ -6,7 +6,7 @@ import {
   Clock24Regular, MoneyHand24Regular, Warning24Regular,
   SignOut24Regular, Sparkle24Regular,CheckmarkCircle24Regular ,People24Regular 
 } from "@fluentui/react-icons";
-import { isApprover } from "../features/auth/session";
+import { isApprover ,canViewFinancials } from "../features/auth/session";
 
 const useStyles = makeStyles({
   shell: { display: "flex", height: "100vh", backgroundColor: tokens.colorNeutralBackground2 },
@@ -32,15 +32,15 @@ const useStyles = makeStyles({
 });
 
 const navItems = [
-  { label: "Dashboard", icon: Home24Regular, path: "/" },
-  { label: "Projects", icon: FolderOpen24Regular, path: "/projects" },
-  { label: "Tasks", icon: TaskListSquareLtr24Regular, path: "/tasks" },
-  { label: "Timesheets", icon: Clock24Regular, path: "/timesheets" },
-  { label: "Approvals", icon: CheckmarkCircle24Regular, path: "/approvals", approverOnly: true },
-  { label: "Financials", icon: MoneyHand24Regular, path: "/financials" },
-  { label: "Risks", icon: Warning24Regular, path: "/risks" },
-  { label: "AI Co-Pilot", icon: Sparkle24Regular, path: "/copilot" },
-  { label: "Resources", icon: People24Regular, path: "/resources", approverOnly: true },
+  { label: "Dashboard", icon: Home24Regular, path: "/", show: () => true },
+  { label: "Projects", icon: FolderOpen24Regular, path: "/projects", show: () => true },
+  { label: "Tasks", icon: TaskListSquareLtr24Regular, path: "/tasks", show: () => true },
+  { label: "Timesheets", icon: Clock24Regular, path: "/timesheets", show: () => true },
+  { label: "Approvals", icon: CheckmarkCircle24Regular, path: "/approvals", show: isApprover },
+  { label: "Resources", icon: People24Regular, path: "/resources", show: isApprover },
+  { label: "Financials", icon: MoneyHand24Regular, path: "/financials", show: canViewFinancials },
+  { label: "Risks", icon: Warning24Regular, path: "/risks", show: () => true },
+  { label: "AI Co-Pilot", icon: Sparkle24Regular, path: "/copilot", show: () => true },
 ];
 
 export function AppShell() {
@@ -52,7 +52,7 @@ export function AppShell() {
     localStorage.removeItem("token");
     navigate("/login");
   };
-const visibleNav = navItems.filter((item) => !item.approverOnly || isApprover());
+const visibleNav = navItems.filter((item) => item.show());
 
   return (
     <div className={styles.shell}>

@@ -8,5 +8,7 @@ namespace AiPmaPlatform.Domain.Entities.Identity
         public string Email { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public string Role { get; set; } = "Developer"; // Admin, PM, Developer, Customer, etc.
+
+        public decimal? HourlyCostRate { get; set; }
     }
 }

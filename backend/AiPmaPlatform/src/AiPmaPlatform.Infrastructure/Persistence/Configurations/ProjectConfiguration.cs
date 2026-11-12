@@ -11,6 +11,9 @@ namespace AiPmaPlatform.Infrastructure.Persistence.Configurations
             builder.Property(p => p.Name).IsRequired().HasMaxLength(200);
             builder.Property(p => p.Status).HasConversion<string>().HasMaxLength(20);
 
+            builder.Property(p => p.Budget).HasPrecision(18, 2);
+            builder.Property(p => p.BillingRatePerHour).HasPrecision(18, 2);
+
             builder.HasOne(p => p.Portfolio)
                    .WithMany(pf => pf.Projects)
                    .HasForeignKey(p => p.PortfolioId);
