@@ -298,6 +298,87 @@ namespace AiPmaPlatform.Infrastructure.Migrations
                     b.ToTable("ProjectTasks");
                 });
 
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Raid.RaidItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("EscalatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Impact")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsEscalated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MitigationPlan")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Probability")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReportedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RootCause")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("ReportedById");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("RaidItems", t =>
+                        {
+                            t.HasCheckConstraint("CK_RaidItems_Impact", "[Impact] BETWEEN 1 AND 5");
+
+                            t.HasCheckConstraint("CK_RaidItems_Probability", "[Probability] BETWEEN 1 AND 5");
+                        });
+                });
+
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.ResourcePlanning.ResourceAllocation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -494,6 +575,32 @@ namespace AiPmaPlatform.Infrastructure.Migrations
                     b.Navigation("Assignee");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("AiPmaPlatform.Domain.Entities.Raid.RaidItem", b =>
+                {
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Identity.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Portfolio.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AiPmaPlatform.Domain.Entities.Identity.User", "ReportedBy")
+                        .WithMany()
+                        .HasForeignKey("ReportedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("ReportedBy");
                 });
 
             modelBuilder.Entity("AiPmaPlatform.Domain.Entities.ResourcePlanning.ResourceAllocation", b =>

@@ -12,6 +12,7 @@ const TimesheetPage = lazy(() => import("../features/timesheets/TimesheetPage"))
 const ApprovalsPage = lazy(() => import("../features/timesheets/ApprovalsPage"));
 const ResourcesPage = lazy(() => import("../features/resources/ResourcesPage"));
 const FinancialsPage = lazy(() => import("../features/financials/FinancialsPage"));
+const RaidPage = lazy(() => import("../features/raid/RaidPage"));
 
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -46,6 +47,7 @@ export const router = createBrowserRouter([
       { path: "approvals", element: isApprover() ? withSuspense(ApprovalsPage) : <Navigate to="/" replace /> },
       { path: "resources", element: isApprover() ? withSuspense(ResourcesPage) : <Navigate to="/" replace /> },
       { path: "financials", element: canViewFinancials() ? withSuspense(FinancialsPage) : <Navigate to="/" replace /> },
+      { path: "risks", element: withSuspense(RaidPage) },
     ],
   },
 ]);

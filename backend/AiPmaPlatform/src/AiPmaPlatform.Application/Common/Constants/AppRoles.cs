@@ -11,5 +11,7 @@
         public const string Viewer = "Viewer";
 
         public static readonly string[] All = { Admin, PMO, PM, Developer, QA, Finance, Viewer };
+
+        public static readonly string[] Managers = { Admin, PMO, PM };
     }
 }

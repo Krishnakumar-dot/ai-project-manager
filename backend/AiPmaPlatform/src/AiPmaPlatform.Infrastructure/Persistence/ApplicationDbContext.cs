@@ -3,6 +3,7 @@ using AiPmaPlatform.Domain.Entities.Identity;
 using AiPmaPlatform.Domain.Entities.Organization;
 using AiPmaPlatform.Domain.Entities.Portfolio;
 using AiPmaPlatform.Domain.Entities.ProjectTasks;
+using AiPmaPlatform.Domain.Entities.Raid;
 using AiPmaPlatform.Domain.Entities.ResourcePlanning;
 using AiPmaPlatform.Domain.Entities.Timesheets;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace AiPmaPlatform.Infrastructure.Persistence
         public DbSet<Timesheet> Timesheets => Set<Timesheet>();
         public DbSet<TimesheetEntry> TimesheetEntries => Set<TimesheetEntry>();
         public DbSet<ResourceAllocation> ResourceAllocations => Set<ResourceAllocation>();
+        public DbSet<RaidItem> RaidItems => Set<RaidItem>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
